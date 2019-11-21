@@ -6,6 +6,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
 
 import AddTaskPage from './components/addTaskPage';
+import HomePage from './components/homePage';
 
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ function App() {
       </Navbar>
 
       <Switch>
+        <Route exact path="/" component={HomePage}/>
         <Route exact path="/add-task" component={AddTaskPage}/>
       </Switch>
 
