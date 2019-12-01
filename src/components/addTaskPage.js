@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
 
+import axios from 'axios';
+
 class AddTaskPage extends React.Component {
     constructor(props) {
         super(props);
@@ -17,8 +19,8 @@ class AddTaskPage extends React.Component {
         this.handleTaskName = this.handleTaskName.bind(this);
         this.handleDueDate = this.handleDueDate.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.submitTask = this.submitTask.bind(this);
     }
-
 
     handleTaskName(event) {
         this.setState({taskName: event.target.value});
@@ -28,9 +30,21 @@ class AddTaskPage extends React.Component {
         this.setState({dueDate: date});
     }
 
+
     handleSubmit(event) {
-        alert(this.state.taskName);
+
+        this.submitTask({
+            taskName: this.state.taskName,
+            dueDate: this.state.dueDate
+        })
+
         event.preventDefault();
+    }
+
+    submitTask(taskData) {
+        axios.put('http://localhost:4000/api/add-task', taskData)
+        .then()
+        .catch();
     }
 
     render() {
@@ -48,14 +62,14 @@ class AddTaskPage extends React.Component {
 
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Due date: </Form.Label>
+                    <Form.Label>
                      <DatePicker selected={this.state.dueDate} onChange={this.handleDueDate} />
+                    </Form.Label>
                     <Form.Text className="text-muted">
                         This is optional
                     </Form.Text>
                   </Form.Group>
-                  <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                  </Form.Group>
+
                   <Button variant="primary" type="submit">
                     Submit
                   </Button>
