@@ -33,6 +33,7 @@ class AddTaskPage extends React.Component {
 
     handleSubmit(event) {
         this.submitTask({
+            listId: localStorage.getItem('listId'),
             taskName: this.state.taskName,
             dueDate: this.state.dueDate,
             status: 'Not done'
@@ -43,7 +44,7 @@ class AddTaskPage extends React.Component {
 
     submitTask(taskData) {
         axios.put('http://localhost:4000/api/tasks', taskData)
-        .then()
+        .then(alert("New task was added, name: " + taskData.taskName))
         .catch();
     }
 
@@ -65,9 +66,6 @@ class AddTaskPage extends React.Component {
                     <Form.Label>
                      <DatePicker selected={this.state.dueDate} onChange={this.handleDueDate} />
                     </Form.Label>
-                    <Form.Text className="text-muted">
-                        This is optional
-                    </Form.Text>
                   </Form.Group>
 
                   <Button variant="primary" type="submit">

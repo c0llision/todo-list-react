@@ -4,11 +4,12 @@ import axios from 'axios';
 
 class TodoItems extends React.Component {
     state = {
-        tasks: [ ]
+        tasks: [ ],
     };
 
     componentDidMount() {
-        axios.get('http://localhost:4000/api/tasks')
+        // get tasks from backend
+        axios.get('http://localhost:4000/api/tasks/' + this.props.listId)
         .then(res => {
             this.setState({ tasks: res.data});
         }).catch((err) => {
@@ -16,6 +17,9 @@ class TodoItems extends React.Component {
         });
     }
 
+    constructor(props) {
+        super();
+    }
     render() {
         return (
             this.state.tasks.map((t) => {

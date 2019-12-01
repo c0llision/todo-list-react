@@ -53,36 +53,36 @@ class TodoItem extends React.Component {
             return ""
         }
         else {
-        return (
-          <tr>
-            <td>
-                <Editable name="taskName" dataType="text" showButtons={false} mode="inline"
-                    onInputChange={event => this.setState({taskName: event.target.value })}
-                    value={this.state.taskName} handleSubmit={this.handleSubmit} />
-            </td>
-            <td>
-                 <DatePicker selected={this.state.dueDate} style={{width:'20px'}} onChange={this.handleDueDate} />
-            </td>
-            <td>
-             <Editable dataType="select" name="status" mode="inline" value={this.state.status} showButtons={false}
-                  options={[
-                    {value : "Not done", text: "Not Done"},
-                    {value : "In Progress", text: "In Progress"},
-                    {value : "Complete", text: "Complete"},
-                  ]}
-                  onInputChange={event => this.setState({status: event.target.value})}
-                  handleSubmit={this.handleSubmit} />
-            </td>
-            <td>
+            return (
+              <tr>
+                <td>
+                    <Editable name="taskName" dataType="text" showButtons={false} mode="inline"
+                        onInputChange={event => this.setState({taskName: event.target.value })}
+                        value={this.state.taskName} handleSubmit={this.handleSubmit} />
+                </td>
+                <td>
+                     <DatePicker selected={this.state.dueDate} style={{width:'20px'}} onChange={this.handleDueDate} />
+                </td>
+                <td>
+                 <Editable dataType="select" name="status" mode="inline" value={this.state.status} showButtons={false}
+                      options={[
+                        {value : "Not done", text: "Not Done"},
+                        {value : "In Progress", text: "In Progress"},
+                        {value : "Complete", text: "Complete"},
+                      ]}
+                      onInputChange={event => this.setState({status: event.target.value})}
+                      handleSubmit={this.handleSubmit} />
+                </td>
+                <td>
 
-            <button type="button" class="close" aria-label="Close" onClick={this.handleDelete}>
-              <span aria-hidden="true">&times;</span>
-            </button>
-            </td>
-          </tr>
+                <button type="button" class="close" aria-label="Close" onClick={this.handleDelete}>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                </td>
+              </tr>
 
-        )
-    }
+            )
+        }
     }
 
 }

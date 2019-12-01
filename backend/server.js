@@ -44,18 +44,18 @@ app.use(function(req, res, next) {
 var Task = mongoose.model('Tasks', new mongoose.Schema({
   taskName: String,
   dueDate: Date,
-  status: String
+  status: String,
+  listId: String
 }));
 
 app.get('/', (req, res) => res.send('Todo list backend server'))
 
-app.get('/api/tasks', (req, res) => {
-    Task.find({}, function (err, tasks) {
+app.get('/api/tasks/:id', (req, res) => {
+    Task.find({listId: req.params.id}, function (err, tasks) {
         if (err) return handleError(err);
         res.json(tasks);
     })
 })
-
 
 app.post('/api/tasks', (req, res) => {
     Task.findByIdAndUpdate(req.body._id,
@@ -71,6 +71,7 @@ app.post('/api/tasks', (req, res) => {
 
 app.put('/api/tasks', (req, res) => {
     Task.create({
+        listId: req.body.listId,
         taskName: req.body.taskName,
         dueDate: req.body.dueDate,
         status: req.body.status
@@ -80,6 +81,7 @@ app.put('/api/tasks', (req, res) => {
     console.log("Task Name: " + req.body.taskName);
     console.log("Due Date: " + req.body.dueDate);
     console.log("Status: " + req.body.status);
+    console.log("id: " + req.body.listId);
 
     res.json("Data uploaded");
 })

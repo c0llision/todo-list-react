@@ -21,16 +21,16 @@
   color: #09d3ac;
 }
 
-.react-datepicker__input-container {
+table .react-datepicker__input-container {
   display: block;
 }
 
-.react-datepicker-wrapper {
+table .react-datepicker-wrapper {
   width: 100px;
   overflow: hidden;
 }
 
-.react-datepicker__input-container input{
+table .react-datepicker__input-container input{
   width: 100px;
   outline: none;
   border: none;
@@ -41,7 +41,8 @@
   width: auto;
   background:transparent;
 }
-.react-datepicker__input-container input:hover{
+
+table .react-datepicker__input-container input:hover{
     text-decoration: underline;
 }
 
