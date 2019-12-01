@@ -22,7 +22,7 @@ class HomePage extends React.Component {
                 <br />
                 <Alert style={{width:'800px', margin:'auto'}} variant="primary">
                 Get back to this todo list by bookmarking the following url:<br />
-                http://localhost:3000/todo/{listId}
+                http://localhost:4000/todo/{listId}
                 </Alert>
                 <br />
                 <TodoTable listId={listId} />

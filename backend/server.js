@@ -9,17 +9,19 @@ console.log(`
 
 const mongoose = require('mongoose');
 const express = require('express')
-const cors = require('cors');
 const app = express()
+var path = require('path');
 const port = 4000
 
-const url = `http://localhost:3000/`
+
+const url = `http://localhost:4000/`
 var opn = require('opn');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json())
-app.use(cors());
 
+// serve react files
+app.use(express.static(path.join(__dirname, '../build')));
 
 // Connect to mongodb
 mongoose.connect('mongodb+srv://user:pLpy6uTQY2RFKNJt@cluster0-i1an0.mongodb.net/test', {useNewUrlParser: true, useUnifiedTopology: true});
@@ -31,15 +33,6 @@ db.once('open', function() {
 mongoose.set('useFindAndModify', false); // get rid of deprecation warning
 
 
-// CORS Header
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "*");
-    res.header("Access-Control-Allow-Headers", "*");
-    next();
-});
-
-
 // MongoDB schemas
 var Task = mongoose.model('Tasks', new mongoose.Schema({
   taskName: String,
@@ -48,7 +41,6 @@ var Task = mongoose.model('Tasks', new mongoose.Schema({
   listId: String
 }));
 
-app.get('/', (req, res) => res.send('Todo list backend server'))
 
 app.get('/api/tasks/:id', (req, res) => {
     Task.find({listId: req.params.id}, function (err, tasks) {
@@ -93,6 +85,10 @@ app.delete('/api/tasks/:id', (req, res)=>{
     });
     console.log("Task deleted, id: " + req.params.id);
 })
+
+app.get('*', (req,res) =>{
+    res.sendFile(path.join(__dirname+'/../build/index.html'));
+});
 
 app.listen(port, () => {
     console.log(`Todo List backend server listening on ${url}`)
