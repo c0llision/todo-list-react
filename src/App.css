@@ -20,3 +20,31 @@
 .App-link {
   color: #09d3ac;
 }
+
+.react-datepicker__input-container {
+  display: block;
+}
+
+.react-datepicker-wrapper {
+  width: 100px;
+  overflow: hidden;
+}
+
+.react-datepicker__input-container input{
+  width: 100px;
+  outline: none;
+  border: none;
+  display: inline;
+  font-family: inherit;
+  font-size: inherit;
+  padding: none;
+  width: auto;
+  background:transparent;
+}
+.react-datepicker__input-container input:hover{
+    text-decoration: underline;
+}
+
+.editable-container a {
+    color:#000;
+}
