@@ -22,6 +22,15 @@ app.use(cors());
 
 
 // Connect to mongodb
+mongoose.connect('mongodb+srv://user:pLpy6uTQY2RFKNJt@cluster0-i1an0.mongodb.net/test', {useNewUrlParser: true, useUnifiedTopology: true});
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, '[ERROR] MongoDB connection error:'));
+db.once('open', function() {
+    console.log("MongoDB connected");
+});
+mongoose.set('useFindAndModify', false); // get rid of deprecation warning
+
+
 // CORS Header
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -30,15 +39,58 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/', (req, res) => res.send('Welcome to Data Representation & Querying'))
 
-app.put('/api/add-task', (req, res) => {
+// MongoDB schemas
+var Task = mongoose.model('Tasks', new mongoose.Schema({
+  taskName: String,
+  dueDate: Date,
+  status: String
+}));
+
+app.get('/', (req, res) => res.send('Todo list backend server'))
+
+app.get('/api/tasks', (req, res) => {
+    Task.find({}, function (err, tasks) {
+        if (err) return handleError(err);
+        res.json(tasks);
+    })
+})
+
+
+app.post('/api/tasks', (req, res) => {
+    Task.findByIdAndUpdate(req.body._id,
+        req.body,
+        {new:true},
+        (error, data)=>{
+            res.json(data);
+        });
+
+    console.log("Task updated, name: " + req.body.taskName);
+    console.log(req.body);
+})
+
+app.put('/api/tasks', (req, res) => {
+    Task.create({
+        taskName: req.body.taskName,
+        dueDate: req.body.dueDate,
+        status: req.body.status
+    });
+
+    console.log("\nNew task added: ");
     console.log("Task Name: " + req.body.taskName);
     console.log("Due Date: " + req.body.dueDate);
+    console.log("Status: " + req.body.status);
 
     res.json("Data uploaded");
 })
 
+
+app.delete('/api/tasks/:id', (req, res)=>{
+    Task.deleteOne({_id:req.params.id}, (err, data)=>{
+        res.json(data);
+    });
+    console.log("Task deleted, id: " + req.params.id);
+})
 
 app.listen(port, () => {
     console.log(`Todo List backend server listening on ${url}`)

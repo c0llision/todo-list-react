@@ -28,21 +28,21 @@ class AddTaskPage extends React.Component {
 
     handleDueDate(date) {
         this.setState({dueDate: date});
+        console.log(this.state.dueDate);
     }
 
-
     handleSubmit(event) {
-
         this.submitTask({
             taskName: this.state.taskName,
-            dueDate: this.state.dueDate
+            dueDate: this.state.dueDate,
+            status: 'Not done'
         })
 
         event.preventDefault();
     }
 
     submitTask(taskData) {
-        axios.put('http://localhost:4000/api/add-task', taskData)
+        axios.put('http://localhost:4000/api/tasks', taskData)
         .then()
         .catch();
     }
